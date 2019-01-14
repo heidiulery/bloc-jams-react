@@ -1,0 +1,12 @@
+import React from 'react';
+
+const Landing = () => {
+	return (
+		'Landing here!'
+	)
+	// <section className='landing'>
+	// 	Landing page will go here
+	// </section>
+}
+
+export default Landing;
