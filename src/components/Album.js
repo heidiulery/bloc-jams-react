@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import albumData from './../data/albums';
 
 class Album extends Component {
@@ -13,7 +12,8 @@ class Album extends Component {
 		this.state = {
 			album: album,
 			currentSong: album.songs[0],
-			isPlaying: false
+			isPlaying: false,
+			hover: true
 		};
 
 		this.audioElement = document.createElement('audio');
@@ -40,12 +40,21 @@ class Album extends Component {
 
 		if (this.state.isPlaying && isSameSong) {
 			this.pause();
-		} else {
+		} 
+		else {
 			if (!isSameSong) {
 				this.setSong(song);
 			}
 			this.play();
 		}
+	}
+
+	handleMouseEnter(song) {
+		this.setState({ hover: song });
+	}
+
+	handleMouseLeave() {
+		this.setState({ hover: false });
 	}
 
 	render() {
@@ -76,8 +85,28 @@ class Album extends Component {
 								<tr
 									className="song"
 									key={index}
-									onClick={() => this.handleSongClick(song)}>
-									<td>{index + 1}</td>
+									onClick={ () => this.handleSongClick(song) }
+									onMouseEnter={ () => this.handleMouseEnter(song) }
+									onMouseLeave={ () => this.handleMouseLeave(song) }>
+									<td>{( () => {
+
+										if(this.state.hover === song && this.state.hover !== this.state.currentSong) {
+											return (<span className="icon ion-md-play"></span>)
+										}
+
+										if(this.state.isPlaying && this.state.currentSong === song) {
+											return (<span className="icon ion-md-pause"></span>)
+										}
+
+										if(!this.state.isPlaying && this.state.currentSong === song) {
+											return(<span className="icon ion-md-play"></span>)
+										}
+
+										else {
+											return (index + 1)
+										}
+									}) ()}
+									</td>
 									<td>{song.title}</td>
 									<td>{song.duration}</td>
 								</tr>
