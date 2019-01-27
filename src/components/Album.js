@@ -60,11 +60,9 @@ class Album extends Component {
 
 	handleNextClick(song) {
 		const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
-		//const maxIndex = this.state.album.songs.length;
-		console.log(albumData.songs.length);
-		console.log(currentIndex);
-		const newIndex = Math.max(...this.state.album.songs.length, currentIndex + 1);
-		const newSong = this.state.album.songs[newIndex];
+		const maxIndex = this.state.album.songs.length - 1;
+		const newIndex = Math.min(maxIndex, currentIndex + 1);
+		const newSong= this.state.album.songs[newIndex];
 		this.setSong(newSong);
 		this.play();
 	}
@@ -115,6 +113,7 @@ class Album extends Component {
 										if(this.state.isPlaying && this.state.currentSong === song) {
 											return (<span className="icon ion-md-pause"></span>)
 										}
+
 										if(this.state.hover === song) {
 											return (<span className="icon ion-md-play"></span>)
 										}
