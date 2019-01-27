@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import albumData from './../data/albums';
+import PlayerBar from './PlayerBar';
 
 class Album extends Component {
 	constructor(props) {
@@ -49,6 +50,25 @@ class Album extends Component {
 		}
 	}
 
+	handlePrevClick(song) {
+		const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+		const newIndex = Math.max(0, currentIndex - 1);
+		const newSong = this.state.album.songs[newIndex];
+		this.setSong(newSong);
+		this.play();
+	}
+
+	handleNextClick(song) {
+		const currentIndex = this.state.album.songs.findIndex(song => this.state.currentSong === song);
+		//const maxIndex = this.state.album.songs.length;
+		console.log(albumData.songs.length);
+		console.log(currentIndex);
+		const newIndex = Math.max(...this.state.album.songs.length, currentIndex + 1);
+		const newSong = this.state.album.songs[newIndex];
+		this.setSong(newSong);
+		this.play();
+	}
+
 	handleMouseEnter(song) {
 		this.setState({ hover: song });
 	}
@@ -61,23 +81,25 @@ class Album extends Component {
 		return (
 			<section className="album">
 				<section id="album-info">
-					<img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title} />
+					<img id="album-cover-art" src={ this.state.album.albumCover } alt={ this.state.album.title } />
 					<div className="album-details">
-						<h1 id="album-title">{this.state.album.title}</h1>
-						<h2 className="artist">{this.state.album.artist}</h2>
-						<div id="release-info">{this.state.album.releaseInfo}</div>
+						<h1 id="album-title">{ this.state.album.title }</h1>
+						<h2 className="artist">{ this.state.album.artist }</h2>
+						<div id="release-info">{ this.state.album.releaseInfo }</div>
 					</div>
 				</section>
-				<table id="song-list" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '20px', marginBottom: '50px' }}>
+				<table id="song-list" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '20px', marginBottom: '20px' }}>
 					<colgroup>
 						<col id="song-number-column" />
 						<col id="song-title-column" />
 						<col id="song-duration-column" />
 					</colgroup>
 					<thead>
-						<th style={{ paddingRight: '20px' }}>Song Number</th>
-						<th>Song Title</th>
-						<th style={{ paddingLeft: '20px' }}>Song Duration</th>
+						<tr>
+							<th style={{ paddingRight: '20px' }}>Song Number</th>
+							<th>Song Title</th>
+							<th style={{ paddingLeft: '20px' }}>Song Duration</th>
+						</tr>
 					</thead>
 					<tbody>
 						{
@@ -89,31 +111,34 @@ class Album extends Component {
 									onMouseEnter={ () => this.handleMouseEnter(song) }
 									onMouseLeave={ () => this.handleMouseLeave(song) }>
 									<td>{( () => {
-
-										if(this.state.hover === song && this.state.hover !== this.state.currentSong) {
-											return (<span className="icon ion-md-play"></span>)
-										}
-
+	
 										if(this.state.isPlaying && this.state.currentSong === song) {
 											return (<span className="icon ion-md-pause"></span>)
 										}
-
-										if(!this.state.isPlaying && this.state.currentSong === song) {
-											return(<span className="icon ion-md-play"></span>)
+										if(this.state.hover === song) {
+											return (<span className="icon ion-md-play"></span>)
 										}
 
 										else {
 											return (index + 1)
 										}
+
 									}) ()}
 									</td>
-									<td>{song.title}</td>
-									<td>{song.duration}</td>
+									<td>{ song.title }</td>
+									<td>{ song.duration }</td>
 								</tr>
 							)
 						}
 					</tbody>
 				</table>
+				<PlayerBar 
+					isPlaying={ this.state.isPlaying } 
+					currentSong={ this.state.currentSong }
+					handleSongClick={ () => this.handleSongClick(this.state.currentSong) }
+					handlePrevClick={ () => this.handlePrevClick() }
+					handleNextClick={ () => this.handleNextClick() }
+				/>
 			</section>
 
 		);
