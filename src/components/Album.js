@@ -196,7 +196,7 @@ class Album extends Component {
 					currentTime={ this.audioElement.currentTime }
 					duration={ this.audioElement.duration }
 					handleTimeChange={ (e) => this.handleTimeChange(e) }
-					formatTime={ () => this.formatTime(this.state.currentTime) }
+					formatTime={ this.formatTime }
 					currentVolume={ this.state.currentVolume }
 					handleVolumeChange={ (e) => this.handleVolumeChange(e) }
 				/>
