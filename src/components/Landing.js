@@ -2,23 +2,38 @@ import React from 'react';
 
 const Landing = () => (
 	<section className='landing'>
-		<h1 className="hero-title">Turn the music up!</h1>
-
-		<section className="selling-points">
-			<div className="point">
-				<h2 className="point-title">Choose your music</h2>
-				<p className="point-description">The world is full of music; why should you have to listen to music that someone else chose?</p>
-			</div>
-			<div className="point">
-				<h2 className="point-title">Unlimited, streaming, ad-free</h2>
-				<p className="point-description">No arbitrary limits.  No distractions.</p>
-			</div>
-			<div className="point">
-				<h2 className="point-title">Mobile enabled</h2>
-				<p className="point-description">Listen to your music on the go.  This streaming service is available on all mobile platforms.</p>
-			</div>
-		</section>
+		<div style={ styles.sellingPoints }>
+			<div style={ styles.point }>* Choose your music *</div>
+			<div style={ styles.point }>* Unlimited, streaming, ad-free *</div>
+			<div style={ styles.point }>* Mobile enabled *</div>
+		</div>
+		<h1 className="hero-title" style={ styles.heroStyle }>Turn the music up!</h1>
 	</section>
 );
+
+const styles = {
+	
+	sellingPoints: {
+		position: "absolute",
+		top: "6vw",
+		right: "8vw",
+		fontSize: "2vw",
+		color: "white",
+		fontWeight: "bold"
+	},
+
+	point: {
+		padding: "1vw"
+	},
+
+	heroStyle: {
+		color: "white",
+		fontSize: "5vw",
+		position: "absolute",
+		bottom: "0.5vw",
+		textAlign: "center",
+		width: "100%"
+	}
+};
 
 export default Landing;

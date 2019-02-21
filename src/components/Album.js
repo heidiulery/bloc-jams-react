@@ -133,77 +133,140 @@ class Album extends Component {
 
 	render() {
 		return (
-			<section className="album">
-				<section id="album-info">
-					<img id="album-cover-art" src={ this.state.album.albumCover } alt={ this.state.album.title } />
-					<div className="album-details">
-						<h1 id="album-title">{ this.state.album.title }</h1>
-						<h2 className="artist">{ this.state.album.artist }</h2>
-						<div id="release-info">{ this.state.album.releaseInfo }</div>
-					</div>
+			<section className="album" style={ styles.albumStyle }>
+				<section id="album-info" style={ styles.albumCover }>
+					<img id="album-cover-art" src={ this.state.album.albumCover } alt={ this.state.album.title } style={{ width: "450px", height: "450px", padding: "25px" }} />
 				</section>
-				<table id="song-list" style={{ marginLeft: 'auto', marginRight: 'auto', marginTop: '20px', marginBottom: '20px' }}>
-					<colgroup>
-						<col id="song-number-column" />
-						<col id="song-title-column" />
-						<col id="song-duration-column" />
-					</colgroup>
-					<thead>
-						<tr>
-							<th style={{ paddingRight: '20px' }}>Song Number</th>
-							<th>Song Title</th>
-							<th style={{ paddingLeft: '20px' }}>Song Duration</th>
-						</tr>
-					</thead>
-					<tbody>
-						{
-							this.state.album.songs.map((song, index) =>
-								<tr
-									className="song"
-									key={index}
-									onClick={ () => this.handleSongClick(song) }
-									onMouseEnter={ () => this.handleMouseEnter(song) }
-									onMouseLeave={ () => this.handleMouseLeave(song) }>
-									<td>{( () => {
-	
-										if(this.state.isPlaying && this.state.currentSong === song) {
-											return (<span className="icon ion-md-pause"></span>)
-										}
+				<section style={ styles.albumInfo }>
+					<section style={ styles.album }>
+						<div style={{ paddingLeft: "25px" }}>{ this.state.album.artist } | <span style={{ fontStyle: "italic" }}>{this.state.album.title}</span></div>
+						<div style={{ fontSize: "16px", paddingLeft: "25px" }}>{ this.state.album.releaseInfo }</div>
+					</section>
+					<table id="song-list" style={ styles.tableStyle }>
+						<colgroup>
+							<col id="song-number-column" />
+							<col id="song-title-column" />
+							<col id="song-duration-column" />
+						</colgroup>
+						<thead>
+							<tr style={ styles.tableHead }>
+								<th style={ styles.tableHeader }>Song Number</th>
+								<th style={ styles.tableHeader }>Song Title</th>
+								<th style={ styles.tableHeader }>Song Duration</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								this.state.album.songs.map((song, index) =>
+									<tr
+										className="song"
+										key={index}
+										onClick={ () => this.handleSongClick(song) }
+										onMouseEnter={ () => this.handleMouseEnter(song) }
+										onMouseLeave={ () => this.handleMouseLeave(song) }>
+										<td style={ styles.tableData }>{( () => {
+		
+											if(this.state.isPlaying && this.state.currentSong === song) {
+												return (<span className="icon ion-md-pause"></span>)
+											}
 
-										if(this.state.hover === song) {
-											return (<span className="icon ion-md-play"></span>)
-										}
+											if(this.state.hover === song) {
+												return (<span className="icon ion-md-play"></span>)
+											}
 
-										else {
-											return (index + 1)
-										}
+											else {
+												return (index + 1)
+											}
 
-									}) ()}
-									</td>
-									<td>{ song.title }</td>
-									<td>{ this.formatTime(song.duration) }</td>
-								</tr>
-							)
-						}
-					</tbody>
-				</table>
-				<PlayerBar 
-					isPlaying={ this.state.isPlaying } 
-					currentSong={ this.state.currentSong }
-					handleSongClick={ () => this.handleSongClick(this.state.currentSong) }
-					handlePrevClick={ () => this.handlePrevClick() }
-					handleNextClick={ () => this.handleNextClick() }
-					currentTime={ this.audioElement.currentTime }
-					duration={ this.audioElement.duration }
-					handleTimeChange={ (e) => this.handleTimeChange(e) }
-					formatTime={ this.formatTime }
-					currentVolume={ this.state.currentVolume }
-					handleVolumeChange={ (e) => this.handleVolumeChange(e) }
-				/>
+										}) ()}
+										</td>
+										<td style={ styles.tableData }>{ song.title }</td>
+										<td style={ styles.tableData }>{ this.formatTime(song.duration) }</td>
+									</tr>
+								)
+							}
+						</tbody>
+					</table>
+					<PlayerBar 
+						isPlaying={ this.state.isPlaying } 
+						currentSong={ this.state.currentSong }
+						handleSongClick={ () => this.handleSongClick(this.state.currentSong) }
+						handlePrevClick={ () => this.handlePrevClick() }
+						handleNextClick={ () => this.handleNextClick() }
+						currentTime={ this.audioElement.currentTime }
+						duration={ this.state.currentSong.duration }
+						handleTimeChange={ (e) => this.handleTimeChange(e) }
+						formatTime={ this.formatTime }
+						currentVolume={ this.state.currentVolume }
+						handleVolumeChange={ (e) => this.handleVolumeChange(e) }
+					/>
+				</section>
 			</section>
 
 		);
 	}
 }
+
+const styles = {
+
+	albumStyle: {
+		backgroundImage: "radial-gradient(#FFB100, #EF7C00)",
+		position: "absolute",
+		top: "4vw",
+		width: "100%",
+		minHeight: "1000px",
+		display: "flex",
+		flexDirection: "row",
+		flexWrap: "wrap",
+		justifyContent: "space-around"
+	},
+
+	albumCover: {
+		width: "500px",
+		height: "500px",
+		background: "white",
+		margin: "30px"
+	},
+
+	albumInfo: {
+		width: "700px",
+		height: "500px",
+		background: "white",
+		margin: "30px"
+	},
+
+	album: {
+		width: "700px",
+		height: "75px",
+		background: "#FFB100",
+		color: "white",
+		fontSize: "30px",
+		textAlign: "left",
+		marginTop: "25px",
+		paddingTop: "20px",
+	},
+
+	tableStyle: {
+		marginTop: "25px",
+		marginLeft: "auto",
+		marginRight: "auto",
+	},
+
+	tableHead: {
+		fontSize: "1.5em",
+		backgroundColor: "#FFC14E",
+		color: "white",
+	},
+
+	tableHeader: {
+		padding: "10px",
+		margin: "5px",
+	},
+
+	tableData: {
+		color: "darkgrey",
+		fontSize: "1.25em",
+	},
+};
 
 export default Album;
