@@ -16,7 +16,7 @@ class PlayerBar extends Component {
 		} = this.props;
 
 		return (
-			<section className="player-bar">
+			<section className="player-bar" style={ styles.playerBar }>
 				<section id="buttons">
 				   <button id="previous" onClick={ handlePrevClick }>
 					 <span className="icon ion-md-skip-backward"></span>
@@ -28,7 +28,7 @@ class PlayerBar extends Component {
 					 <span className="icon ion-md-skip-forward"></span>
 				   </button>
 				 </section>
-				 <section id="time-control">
+				 <section id="time-control" style={ styles.playerBar }>
 					<div className="current-time">{ formatTime(currentTime) }</div>
 					<input 
 						type="range"
@@ -39,9 +39,9 @@ class PlayerBar extends Component {
 						step="0.01"
 						onChange={ handleTimeChange }
 					/>
-					<div className="total-time">{ formatTime(duration) }</div>
+					<div className="total-time">{ duration }</div>
 				 </section>
-				 <section id="volume-control">
+				 <section id="volume-control" style={ styles.playerBar }>
 				   <div className="icon ion-md-volume-low">{ Math.round(currentVolume * 100) }</div>
 				   <input 
 						type="range" 	
@@ -58,5 +58,14 @@ class PlayerBar extends Component {
 		);
 	}
 }
+
+const styles = {
+
+	playerBar: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-around"
+	},
+};
 
 export default PlayerBar;
