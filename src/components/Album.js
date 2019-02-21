@@ -149,10 +149,10 @@ class Album extends Component {
 							<col id="song-duration-column" />
 						</colgroup>
 						<thead>
-							<tr>
-								<th>Song Number</th>
-								<th>Song Title</th>
-								<th>Song Duration</th>
+							<tr style={ styles.tableHead }>
+								<th style={ styles.tableHeader }>Song Number</th>
+								<th style={ styles.tableHeader }>Song Title</th>
+								<th style={ styles.tableHeader }>Song Duration</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -164,7 +164,7 @@ class Album extends Component {
 										onClick={ () => this.handleSongClick(song) }
 										onMouseEnter={ () => this.handleMouseEnter(song) }
 										onMouseLeave={ () => this.handleMouseLeave(song) }>
-										<td>{( () => {
+										<td style={ styles.tableData }>{( () => {
 		
 											if(this.state.isPlaying && this.state.currentSong === song) {
 												return (<span className="icon ion-md-pause"></span>)
@@ -180,8 +180,8 @@ class Album extends Component {
 
 										}) ()}
 										</td>
-										<td>{ song.title }</td>
-										<td>{ this.formatTime(song.duration) }</td>
+										<td style={ styles.tableData }>{ song.title }</td>
+										<td style={ styles.tableData }>{ this.formatTime(song.duration) }</td>
 									</tr>
 								)
 							}
@@ -248,9 +248,25 @@ const styles = {
 
 	tableStyle: {
 		marginTop: "25px",
-		align: "center"
+		marginLeft: "auto",
+		marginRight: "auto",
 	},
 
+	tableHead: {
+		fontSize: "1.5em",
+		backgroundColor: "#FFC14E",
+		color: "white",
+	},
+
+	tableHeader: {
+		padding: "10px",
+		margin: "5px",
+	},
+
+	tableData: {
+		color: "darkgrey",
+		fontSize: "1.25em",
+	},
 };
 
 export default Album;
